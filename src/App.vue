@@ -16,7 +16,6 @@ import InputForm from './InputForm';
 import BallsFeed from './BallsFeed';
 
 export default {
-  name: 'app',
   components: { Login, InputForm, BallsFeed },
   data() {
     return {

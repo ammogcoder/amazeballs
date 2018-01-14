@@ -14,21 +14,23 @@ var config = {
 };
 firebase.initializeApp(config);
 
+// a reference to the Balls collection
+const ballsCollection = firebase.firestore()
+  .collection('balls');
+
 // the shared state object that any vue component
 // can get access to
 export const store = {
   ballsInFeed: null,
   currentUser: null,
-  writeBall: (message) => ballsCollection.insert({
+  writeBall: (message) => ballsCollection.add({
     createdOn: new Date(),
-    author: currentUser,
+    author: store.currentUser.uid,
+    author_name: store.currentUser.displayName,
+    author_image: store.currentUser.photoURL,
     message
   }),
 };
-
-// a reference to the Balls collection
-const ballsCollection = firebase.firestore()
-  .collection('balls');
 
 // onSnapshot is executed every time the data
 // in the underlying firestore collection changes
@@ -41,10 +43,12 @@ ballsCollection
       ball.id = doc.id;
       balls.push(ball);
     });
+    console.log('Received Balls feed:', balls);
     store.ballsInFeed = balls;
   });
 
 // When a user logs in or out, save that in the store
 firebase.auth().onAuthStateChanged((user) => {
+  console.log('Logged in as:', user);
   store.currentUser = user;
 });

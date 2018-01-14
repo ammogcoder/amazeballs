@@ -15,7 +15,6 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 
 export default {
-  name: 'inputform',
   data() {
     return {
       email: null,
