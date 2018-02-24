@@ -3,6 +3,7 @@
     <img src="./assets/logo.png">
     <Login v-if="!store.currentUser" />
     <div v-else>
+      <button @click="logout">Log out</button>
       <InputForm />
       <BallsFeed />
     </div>
@@ -10,6 +11,9 @@
 </template>
 
 <script>
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
 import { store } from './store';
 import Login from './Login';
 import InputForm from './InputForm';
@@ -22,6 +26,12 @@ export default {
       store
     };
   },
+  methods: {
+    logout() {
+      firebase.auth().signOut()
+        .catch((err) => alert(err.message || err));
+    },
+  }
 }
 </script>
 

@@ -34,6 +34,8 @@ export const store = {
 
 // onSnapshot is executed every time the data
 // in the underlying firestore collection changes
+// It will get passed an array of references to 
+// the documents that match your query
 ballsCollection
   .limit(5)
   .onSnapshot((ballsRef) => {

@@ -23,11 +23,13 @@ export default {
   },
   methods: {
     signInWithEmailAndPassword() {
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password);
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        .catch((err) => alert(err.message || err));
     },
     signInWithGoogle() {
       var provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider);
+      firebase.auth().signInWithPopup(provider)
+        .catch((err) => alert(err.message || err));
     }
   }
 }
