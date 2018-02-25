@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="formPost">
-    <textarea v-model="message" />
+    <input type="text" autofocus ref="inputMessage" v-model="message" />
     <input type="submit" value="DUNK!" />
   </form>
 </template>
@@ -16,7 +16,11 @@ export default {
   },
   methods: {
     formPost() {
-      store.writeBall(this.message);
+      store.writeBall(this.message)
+        .then(() => {
+          this.message = null;
+          this.$refs.inputMessage.focus();
+        });
     }
   },
 }
