@@ -23,13 +23,16 @@ const ballsCollection = firebase.firestore()
 export const store = {
   ballsInFeed: null,
   currentUser: null,
-  writeBall: (message) => ballsCollection.add({
-    createdOn: new Date(),
-    author: store.currentUser.uid,
-    author_name: store.currentUser.displayName,
-    author_image: store.currentUser.photoURL,
-    message
-  }),
+  writeBall: (message) => {
+    const dt = {
+      createdOn: new Date(),
+      author: store.currentUser.uid,
+      author_name: store.currentUser.displayName,
+      author_image: store.currentUser.photoURL,
+      message
+    };
+    return ballsCollection.add(dt).catch(e => console.error('error inserting', dt, e));
+  }
 };
 
 // onSnapshot is executed every time the data
@@ -37,6 +40,7 @@ export const store = {
 // It will get passed an array of references to 
 // the documents that match your query
 ballsCollection
+  .orderBy('createdOn', 'desc')
   .limit(5)
   .onSnapshot((ballsRef) => {
     const balls = [];
