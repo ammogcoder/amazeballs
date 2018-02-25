@@ -16,11 +16,9 @@ export default {
   },
   methods: {
     formPost() {
-      store.writeBall(this.message)
-        .then(() => {
-          this.message = null;
-          this.$refs.inputMessage.focus();
-        });
+      store.writeBall(this.message);
+      this.message = null;
+      this.$refs.inputMessage.focus();
     }
   },
 }
